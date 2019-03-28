@@ -20,7 +20,8 @@ class CreateTransactionsTable extends Migration
             $table->integer('quantity');
             $table->float('price');
             $table->date('date');
-            $table->string('transaction_status')->default('loss');
+            $table->float('transaction_status')->nullable();
+            $table->string('total_porfitloss')->nullable();
             $table->timestamps();
 
             $table->foreign('stock_id')

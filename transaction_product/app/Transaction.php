@@ -13,7 +13,12 @@ class Transaction extends Model
         'quantity',
         'price',
         'date',
-        'transaction_status'
+        'transaction_status',
+        'total_porfitloss'
     ];
 
+
+    public function stock(){
+        return $this->belongsTo(Stock::class);
+    }
 }

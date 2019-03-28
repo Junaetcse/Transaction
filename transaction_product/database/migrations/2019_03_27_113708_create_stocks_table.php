@@ -16,7 +16,8 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ticket');
-            $table->float('current_price');
+            $table->string('name')->nullable();
+            $table->float('current_price')->default(0.0);
             $table->float('average_price')->default(0.0);
             $table->integer('stock')->default(0);
             $table->timestamps();

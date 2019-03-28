@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $stocks = \App\Stock::all();
+    $transactions = \App\Transaction::all();
+    return view('welcome',compact('stocks','transactions'));
 });
+
+Route::resource('stock','StockController');
+
+Route::resource('transaction','TransactionController');

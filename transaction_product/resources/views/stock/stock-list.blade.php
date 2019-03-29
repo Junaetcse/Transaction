@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Matrix Admin</title>
+    <title>Stock Price</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}" />
@@ -48,8 +48,6 @@
 
 <div id="content">
     <div id="content-header">
-        <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
-        <h1>Tables</h1>
 
     </div>
     <div class="container-fluid">
@@ -59,7 +57,7 @@
                 <div class="widget-box">
                     <a class="btn btn-success" href="/stock/create">Create Stock</a>
                     <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
-                        <h5>Static table</h5>
+                        <h5>Stock List</h5>
                     </div>
                     <div class="widget-content nopadding">
                         <table class="table table-bordered table-striped">

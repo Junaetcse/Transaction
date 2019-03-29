@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Matrix Admin</title>
+    <title>Stock Price</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -17,7 +17,7 @@
 
 <!--Header-part-->
 <div id="header">
-    <h1><a href="dashboard.html">Matrix Admin</a></h1>
+    <h1><a href="/">Matrix Admin</a></h1>
 </div>
 <!--close-Header-part-->
 
@@ -37,7 +37,7 @@
 <!--sidebar-menu-->
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
     <ul>
-        <li class="active"><a href="index.html"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
+        <li class="active"><a href="/"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
         <li> <a href="/stock"><i class="icon icon-signal"></i> <span>Stock</span></a> </li>
         <li> <a href="/transaction"><i class="icon icon-inbox"></i> <span>Transaction</span></a> </li>
     </ul>
@@ -48,8 +48,6 @@
 
 <div id="content">
     <div id="content-header">
-        <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
-        <h1>Tables</h1>
     </div>
     <div class="container-fluid">
         <hr>
@@ -111,7 +109,8 @@
                                 <th>Quantity</th>
                                 <th>Price</th>
                                 <th>Date</th>
-                                <th>Transaction Status</th>
+                                <th>Profit/Loss per Stock</th>
+                                <th>TotalProfit/Loss</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -125,6 +124,7 @@
                                     <td class="center"> {{$transaction->price}}</td>
                                     <td>{{$transaction->date}}</td>
                                     <td class="center">{{$transaction->transaction_status}}</td>
+                                    <td class="center">{{ number_format($transaction->total_porfitloss, 2, '.', '')}} </td>
 
                                     <td>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Matrix Admin</title>
+    <title>Stock Price</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}" />
@@ -17,7 +17,7 @@
 
 <!--Header-part-->
 <div id="header">
-    <h1><a href="dashboard.html">Matrix Admin</a></h1>
+    <h1><a href="dashboard.html">Stock Price</a></h1>
 </div>
 <!--close-Header-part-->
 
@@ -48,8 +48,6 @@
 
 <div id="content">
     <div id="content-header">
-        <div id="breadcrumb"> <a href="#" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a> <a href="#" class="current">Tables</a> </div>
-        <h1>Tables</h1>
 
     </div>
     <div class="container-fluid">
@@ -58,7 +56,7 @@
             <div class="span8">
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                        <h5>Personal-info</h5>
+                        <h5>Transaction Create</h5>
                     </div>
                     <div class="widget-content nopadding">
                         <form class="form-horizontal" action="{{url('transaction')}}" method="post">
@@ -74,23 +72,9 @@
                                     </select>
                                 </div>
                             </div>
-                            {{--<div class="control-group">--}}
-                                {{--<label class="control-label">Transaction :</label>--}}
-                                {{--<div class="controls">--}}
-                                    {{--<input type="text" class="span5" name="transaction"  />--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
 
                             <div class="control-group">
                                 <label class="control-label">Transaction</label>
-                                {{--<div class="controls">--}}
-                                    {{--<label>--}}
-                                        {{--<input type="radio" name="transaction" />--}}
-                                        {{--Buy</label>--}}
-                                    {{--<label>--}}
-                                        {{--<input type="radio" name="transaction" />--}}
-                                        {{--Sell</label>--}}
-                                {{--</div>--}}
                                 <div class="controls" name="stock_id">
                                     <select name="transaction" >
 
@@ -109,7 +93,7 @@
                             <div class="control-group">
                                 <label class="control-label">Price</label>
                                 <div class="controls">
-                                    <input type="number"  class="span5" name="price"  />
+                                    <input type="number"  step="any"  class="span5" name="price"  />
                                 </div>
                             </div>
                             <div class="control-group">
@@ -117,7 +101,7 @@
                                 <div class="controls">
                                     <div  data-date="" class="input-append date datepicker">
                                         <input type="date" name="date"  data-date-format="mm-dd-yyyy" class="span11" >
-                                        <span class="add-on"><i class="icon-th"></i></span> </div>
+                                        </div>
                                 </div>
                             </div>
 

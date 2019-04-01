@@ -19,4 +19,5 @@ Route::get('/', function () {
 
 Route::resource('stock','StockController');
 Route::get('add-stock','StockController@addStock');
+Route::post('stock-search','StockController@stockSearch');
 Route::resource('transaction','TransactionController');

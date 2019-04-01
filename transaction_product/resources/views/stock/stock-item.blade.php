@@ -60,25 +60,42 @@
                         <h5>Stock Create</h5>
                     </div>
                     <div class="widget-content nopadding">
-                        <form class="form-horizontal" action="{{url('stock')}}" method="post">
+                        <form class="form-horizontal" action="{{url('stock-search')}}" method="post">
                             @csrf
                             <div class="control-group">
-                                <div id="">
-                                    <input type="text" placeholder="Search here..."/>
+                                <label class="control-label">Stock</label>
+                                <div class="controls" id="">
+                                    <input type="text" name="keyword" placeholder="Search here..."/>
                                     <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
                                 </div>
                             </div>
-
-                            <div class="control-group">
-                                <label class="control-label">Name</label>
-                                <div class="controls">
-                                    <input type="text"  class="span5" name="name"  />
-                                </div>
-                            </div>
-                            <div class="form-actions">
-                                <button type="submit" class="btn btn-success">Save</button>
-                            </div>
                         </form>
+                        <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+                            <h5>Stock List</h5>
+                        </div>
+
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Symbol</th>
+                                <th>Name</th>
+                                <th>Action</th>
+
+
+                            </tr>
+                            </thead>
+                            @if(isset($responses))
+                            @foreach($responses['bestMatches'] as $data)
+                            <tbody class="parent">
+
+                                <td>{{$data['1. symbol']}}</td>
+                                <td>{{$data['2. name']}}</td>
+                                <td><button>Add</button></td>
+                            </tbody>
+                                @endforeach
+                        </table>
+                        @endif
+                        </div>
                     </div>
                 </div>
             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Stock;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -37,4 +38,12 @@ class StockController extends Controller
         return view('stock.stock-item');
     }
 
+
+    public function stockSearch(Request $request){
+     //   dd($request->keyword);
+        $client = new Client();
+        $req = $client->get('https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords='+(int)$request->keyword+'&apikey=demo');
+        $responses = $req->getBody()->getContents();
+        return view('stock.stock-item')->with('responses', json_decode($responses, true));
+    }
 }

@@ -38,7 +38,9 @@
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
     <ul>
         <li><a href="/"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
-        <li class="active"> <a href="/stock"><i class="icon icon-signal"></i> <span>Charts &amp; graphs</span></a> </li>
+        <li class="active"> <a href="/stock"><i class="icon icon-signal"></i> <span>Stock</span></a> </li>
+        <li> <a href="/add-stock"><i class="icon icon-inbox"></i> <span>Add Stock</span></a> </li>
+
         <li> <a href="/transaction"><i class="icon icon-inbox"></i> <span>Transaction</span></a> </li>
     </ul>
 </div>

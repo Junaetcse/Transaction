@@ -33,4 +33,8 @@ class StockController extends Controller
         return back();
     }
 
+    public function addStock(){
+        return view('stock.stock-item');
+    }
+
 }

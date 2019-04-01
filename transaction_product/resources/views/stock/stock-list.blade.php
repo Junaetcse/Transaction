@@ -12,6 +12,41 @@
     <link href="{{asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('css/jquery.gritter.css')}}" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+
+        var timeouts = [];
+
+        $(document).ready(function() {
+            iterateTableRows();
+           // var length =  $(".parent tr").length;
+            //setInterval(iterateTableRows, 12000*length+30000); //5s
+        });
+
+        function iterateTableRows() {
+            $(".parent tr").each(function() {
+                var $priceCell = $(this).find('.key');
+                var key = $priceCell.data('name');
+
+
+                var timeout = setTimeout(function(key) {
+                    $.ajax({
+                        type: 'GET',
+                       // url: 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+key+'&apikey=VKA25ZIFB6M9BWH5',
+                        url: 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=MSFT&apikey=demo',
+                        success: function(result) {
+                            console.log(result, key, $priceCell);
+                            if (result && result['Global Quote'] && result['Global Quote']['05. price']) {
+                                $priceCell.text(result['Global Quote']['05. price']);
+                            }
+                        }
+                    });
+                },2000); //30s - the API has restriction of 5 calls/minute
+
+            });
+        }
+
+    </script>
 </head>
 <body>
 
@@ -39,6 +74,8 @@
     <ul>
         <li><a href="/"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
         <li class="active"> <a href="/stock"><i class="icon icon-signal"></i> <span>Stock</span></a> </li>
+        <li> <a href="/add-stock"><i class="icon icon-inbox"></i> <span>Add Stock</span></a> </li>
+
         <li> <a href="/transaction"><i class="icon icon-inbox"></i> <span>Transaction</span></a> </li>
     </ul>
 </div>
@@ -59,6 +96,7 @@
                     <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
                         <h5>Stock List</h5>
                     </div>
+
                     <div class="widget-content nopadding">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -71,12 +109,12 @@
 
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="parent">
                             @foreach($stocks as $stock)
-                            <tr class="odd gradeX">
+                            <tr class="odd">
                                 <td>{{$stock->ticket}}</td>
-                                <td>{{$stock->name}}</td>
-                                <td class="center">{{$stock->current_price}}</td>
+                                <td >{{$stock->name}}</td>
+                                <td class="key" data-name="{{$stock->name}}" >{{$stock->current_price}}</td>
                                 <td class="center">{{$stock->average_price}}</td>
                                 <td class="center"> {{$stock->stock}}</td>
                             </tr>

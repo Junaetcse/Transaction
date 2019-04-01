@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::resource('stock','StockController');
-
+Route::get('add-stock','StockController@addStock');
 Route::resource('transaction','TransactionController');

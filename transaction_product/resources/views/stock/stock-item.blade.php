@@ -12,6 +12,43 @@
     <link href="{{asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="{{asset('css/jquery.gritter.css')}}" />
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+          $('.add-stock').click(function () {
+              $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                  }
+              });
+              var $row =  $(this).closest("tr");
+              var $symbol = $row.find(".data-symbol").data('symbol');
+              var $name = $row.find(".data-name").data('name');
+              console.log($symbol);
+              console.log($name);
+             addStock($symbol,$name)
+          })
+
+            function addStock($symbol,$name) {
+                if($symbol != '' && $name != '' ){
+                    $.ajax({
+                        type: 'post',
+                        url: 'insert-stock',
+                        data: {
+                            '_token': $('input[name=_token]').val(),
+                            'ticket': $symbol,
+                            'name': $name},
+                            success: function(data) {
+                          alert('successfully added')
+                        },
+                        error:'Something wrong'
+                    });
+                }
+            }
+
+        })
+    </script>
 </head>
 <body>
 
@@ -39,7 +76,6 @@
     <ul>
         <li><a href="/"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
         <li class="active"> <a href="/stock"><i class="icon icon-signal"></i> <span>Stock</span></a> </li>
-        <li> <a href="/add-stock"><i class="icon icon-inbox"></i> <span>Add Stock</span></a> </li>
         <li> <a href="/transaction"><i class="icon icon-inbox"></i> <span>Transaction</span></a> </li>
     </ul>
 </div>
@@ -86,15 +122,21 @@
                             </thead>
                             @if(isset($responses))
                             @foreach($responses['bestMatches'] as $data)
-                            <tbody class="parent">
+                            <tbody class="table-body">
+                                <tr>
+                                    <td class="data-symbol" data-symbol="{{$data['1. symbol']}}">{{$data['1. symbol']}}</td>
+                                    <td class="data-name" data-name="{{$data['2. name']}}">{{$data['2. name']}}</td>
 
-                                <td>{{$data['1. symbol']}}</td>
-                                <td>{{$data['2. name']}}</td>
-                                <td><button>Add</button></td>
+                                    <td><button class="add-stock">Add</button></td>
+
+                                </tr>
+
                             </tbody>
                                 @endforeach
                         </table>
                         @endif
+
+
                         </div>
                     </div>
                 </div>
@@ -108,7 +150,7 @@
 <!--Footer-part-->
 
 <div class="row-fluid">
-    <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+    <div id="footer" class="span12">No data </div>
 </div>
 
 <!--end-Footer-part-->

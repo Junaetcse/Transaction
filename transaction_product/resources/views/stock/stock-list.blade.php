@@ -21,18 +21,18 @@
             iterateTableRows();
            // var length =  $(".parent tr").length;
             //setInterval(iterateTableRows, 12000*length+30000); //5s
+            refreshData()
         });
 
         function iterateTableRows() {
             $(".parent tr").each(function() {
                 var $priceCell = $(this).find('.key');
                 var key = $priceCell.data('name');
-
-
+                var url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+key+'&apikey=VKA25ZIFB6M9BWH5';
                 var timeout = setTimeout(function(key) {
                     $.ajax({
                         type: 'GET',
-                       // url: 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+key+'&apikey=VKA25ZIFB6M9BWH5',
+                        //url: url,
                         url: 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=MSFT&apikey=demo',
                         success: function(result) {
                             console.log(result, key, $priceCell);
@@ -41,9 +41,16 @@
                             }
                         }
                     });
-                },2000); //30s - the API has restriction of 5 calls/minute
+                },15000); //30s - the API has restriction of 5 calls/minute
 
             });
+        }
+
+        function refreshData() {
+            $('.btn').click(function () {
+                iterateTableRows();
+                console.log('clicked');
+            })
         }
 
     </script>
@@ -74,8 +81,6 @@
     <ul>
         <li><a href="/"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
         <li class="active"> <a href="/stock"><i class="icon icon-signal"></i> <span>Stock</span></a> </li>
-        <li> <a href="/add-stock"><i class="icon icon-inbox"></i> <span>Add Stock</span></a> </li>
-
         <li> <a href="/transaction"><i class="icon icon-inbox"></i> <span>Transaction</span></a> </li>
     </ul>
 </div>
@@ -93,7 +98,8 @@
             <div class="span12">
                 <div class="widget-box">
                     <a class="btn btn-success" href="/stock/create">Create Stock</a>
-                    <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+                    <div class="widget-title">
+                        <a class="btn" style="margin-top: 4px"><i class="icon-refresh"></i></a>
                         <h5>Stock List</h5>
                     </div>
 
@@ -101,20 +107,21 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>ticket</th>
-                                <th>name</th>
-                                <th>current_price</th>
-                                <th>average_price</th>
-                                <th>stock</th>
+                                <th>Ticker</th>
+                                <th>Name</th>
+                                <th>Current_price</th>
+                                <th>Average_price</th>
+                                <th>Stock</th>
 
                             </tr>
                             </thead>
                             <tbody class="parent">
                             @foreach($stocks as $stock)
+
                             <tr class="odd">
                                 <td>{{$stock->ticket}}</td>
                                 <td >{{$stock->name}}</td>
-                                <td class="key" data-name="{{$stock->name}}" >{{$stock->current_price}}</td>
+                                <td class="key" data-name="{{$stock->ticket}}" >{{$stock->current_price}}</td>
                                 <td class="center">{{$stock->average_price}}</td>
                                 <td class="center"> {{$stock->stock}}</td>
                             </tr>

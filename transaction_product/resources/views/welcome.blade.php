@@ -39,8 +39,6 @@
     <ul>
         <li class="active"><a href="/"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
         <li> <a href="/stock"><i class="icon icon-signal"></i> <span>Stock</span></a> </li>
-        <li> <a href="/add-stock"><i class="icon icon-inbox"></i> <span>Add Stock</span></a> </li>
-
         <li> <a href="/transaction"><i class="icon icon-inbox"></i> <span>Transaction</span></a> </li>
     </ul>
 </div>
@@ -63,11 +61,11 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>ticket</th>
-                                <th>current_price</th>
-                                <th>average_price</th>
-                                <th>stock</th>
-                                <th>action</th>
+                                <th>Ticker</th>
+                                <th>Current_price</th>
+                                <th>Average_price</th>
+                                <th>Stock</th>
+                                <th>Action</th>
 
                             </tr>
                             </thead>

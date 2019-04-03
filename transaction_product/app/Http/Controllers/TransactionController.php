@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\CurrentPrice;
+use App\Investment;
 use App\Stock;
 use App\Transaction;
 use Illuminate\Http\Request;
@@ -25,10 +27,12 @@ class TransactionController extends Controller
     }
 
     public function store(Request $request){
-
+        $current_price = CurrentPrice::where('key','current_price')->first();
         $stock_info =Stock::findOrFail( $request->get('stock_id'));
         $status = null;
         $total_profit = null;
+        $amount = $request->get('quantity') * $request->get('price');
+
 
         if ($request->get('transaction') == 'buy'){
             $avg_price = $this->avg_px($stock_info->average_price,$stock_info->stock,$request->quantity,$request->price);
@@ -44,16 +48,56 @@ class TransactionController extends Controller
         $stock_info->save();
 
 
+        if ($request->get('transaction') == 'buy'){
+            if ($request->price > $current_price){
+                Transaction::create([
+                    'stock_id' => $request->get('stock_id'),
+                    'transaction' => $request->get('transaction'),
+                    'quantity' => $request->get('quantity'),
+                    'price' => $request->get('price'),
+                    'date' => $request->get('date'),
+                    'transaction_status' => $status,
+                    'total_porfitloss'=> $total_profit
+                ]);
+            }
 
-        Transaction::create([
-            'stock_id' => $request->get('stock_id'),
-            'transaction' => $request->get('transaction'),
-            'quantity' => $request->get('quantity'),
-            'price' => $request->get('price'),
+        }else{
+            Transaction::create([
+                'stock_id' => $request->get('stock_id'),
+                'transaction' => $request->get('transaction'),
+                'quantity' => $request->get('quantity'),
+                'price' => $request->get('price'),
+                'date' => $request->get('date'),
+                'transaction_status' => $status,
+                'total_porfitloss'=> $total_profit
+            ]);
+        }
+
+
+        Investment::create([
             'date' => $request->get('date'),
-            'transaction_status' => $status,
-            'total_porfitloss'=> $total_profit
+            'amount' => $amount,
+            'investment_status' => $request->get('transaction') == 'buy' ? 'investment' : 'withdrawal'
         ]);
+
+
+
+        if ($current_price){
+            $price = $current_price->value;
+             if ($request->get('transaction') == 'buy'){
+                 $new_price = $price - $amount;
+             }else{
+                 $new_price = $price + $amount;
+             }
+            $current_price->value = $new_price;
+             $current_price->save();
+        }else{
+            CurrentPrice::create([
+                    'key' => 'current_price',
+                    'value' => '0.0'
+            ]);
+        }
+
         return Redirect::to('transaction');
     }
 

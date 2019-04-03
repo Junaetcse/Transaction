@@ -14,7 +14,9 @@
 Route::get('/', function () {
     $stocks = \App\Stock::all();
     $transactions = \App\Transaction::all();
-    return view('welcome',compact('stocks','transactions'));
+    $current_price = \App\CurrentPrice::where('key','current_price')->first();
+    $investment = \App\Investment::all();
+    return view('welcome',compact('stocks','transactions','current_price','investment'));
 });
 
 Route::resource('stock','StockController');

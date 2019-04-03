@@ -55,6 +55,39 @@
             <div class="span12">
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+                        <h5>Investment table</h5>
+                        @if($current_price)
+                        <h5 style="color: #003399">Current Price (  {{$current_price->value}}  )</h5>
+                        @endif
+                    </div>
+                    <div class="widget-content nopadding">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>investment_status</th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($investment as $invest)
+                                <tr class="odd gradeX">
+                                    <td>{{$invest->date}}</td>
+                                    <td class="center">{{$invest->amount}}</td>
+                                    <td class="center">{{$invest->investment_status}}</td>
+
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+                <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
                         <h5>Stock table</h5>
                     </div>
                     <div class="widget-content nopadding">

@@ -13,8 +13,8 @@
                         <a class="btn btn-success" href="/investment/create">Create Investment</a>
                         <div class="widget-title">
                             <h5>Investment List</h5>
-                            @if($current_price)
-                                <h5 style="color: #003399">Current cash balance (  {{$current_price->value}}  )</h5>
+                            @if($cash_balance)
+                                <h5 style="color: #003399">Current cash balance (  {{$cash_balance->value}}  )</h5>
                             @endif
                         </div>
 

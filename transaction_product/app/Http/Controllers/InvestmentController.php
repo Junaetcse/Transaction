@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\CurrentPrice;
+use App\CashBalance;
 use App\Investment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -17,9 +17,9 @@ class InvestmentController extends Controller
     }
 
     public function index(){
-        $current_price = \App\CurrentPrice::where('key','current_price')->first();
+        $cash_balance = \App\CashBalance::where('key','current_cash_balance')->first();
         $investments = Investment::all();
-        return view('investment.list',compact('investments','current_price'));
+        return view('investment.list',compact('investments','cash_balance'));
     }
 
 
@@ -32,7 +32,7 @@ class InvestmentController extends Controller
         $date = $request->get('date');
         $amount = $request->get('amount');
         $status = $request->get('investment_status');
-        (new CurrentPrice())->updateCash($status,$amount);
+        (new CashBalance())->updateCash($status,$amount);
         (new Investment())->insert($date,$amount,$status);
         return Redirect::to('investment');
     }

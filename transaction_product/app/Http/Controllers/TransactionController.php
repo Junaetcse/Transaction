@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\CurrentPrice;
+use App\CashBalance;
 use App\Investment;
 use App\Stock;
 use App\Transaction;
@@ -36,7 +36,7 @@ class TransactionController extends Controller
         $quantity = $request->get('quantity');
         $price = $request->get('price');
         $date = $request->get('date');
-        $current_price = CurrentPrice::where('key','current_price')->first();
+        $cash_balance = CashBalance::where('key','current_cash_balance')->first();
         $status = null;
         $total_profit = null;
         $amount = $quantity * $price;
@@ -47,16 +47,20 @@ class TransactionController extends Controller
 
 
         if ($transaction == 'buy'){
-            if ($current_price->value < $amount )
+
+            if ($cash_balance){
+                if ($cash_balance->value < $amount )
+                    return Redirect::to('transaction');
+
+                $avg_price = $this->avg_px($stock_info->average_price,$stock_info->stock,$quantity,$price);
+                $stock_info->average_price = $avg_price;
+                $stock_info->stock = $stock_info->stock + $quantity;
+                $cash_balance->value = $cash_balance->value - $amount;
+                $cash_balance->save();
+
+            }else{
                 return Redirect::to('transaction');
-
-            $avg_price = $this->avg_px($stock_info->average_price,$stock_info->stock,$quantity,$price);
-            $stock_info->average_price = $avg_price;
-            $stock_info->stock = $stock_info->stock + $quantity;
-            $current_price->value = $current_price->value - $amount;
-            $current_price->save();
-
-
+            }
 
 
         }else{
@@ -67,8 +71,8 @@ class TransactionController extends Controller
             $stock_info->stock = $stock_info->stock - $quantity;
             $status = $price - $stock_info->average_price;
             $total_profit = $status * $request->quantity;
-            $current_price->value = $current_price->value + $amount;
-            $current_price->save();
+            $cash_balance->value = $cash_balance->value + $amount;
+            $cash_balance->save();
         }
         $stock_info->save();
 

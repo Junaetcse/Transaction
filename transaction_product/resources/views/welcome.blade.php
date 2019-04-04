@@ -8,42 +8,32 @@
         <hr>
         <div class="row-fluid">
             <div class="span12">
+
                 <div class="widget-box">
-                    <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
-                        <h5>Investment table</h5>
-                        @if($current_price)
-                        <h5 style="color: #003399">Current cash balance (  {{$current_price->value}}  )</h5>
-                        @endif
+                    <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+                        <h5></h5>
                     </div>
                     <div class="widget-content nopadding">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>investment_status</th>
+
+                            <div class="txt"> Total stock balance <span class="date badge badge-info total"></span></div>
 
 
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($investment as $invest)
-                                <tr class="odd gradeX">
-                                    <td>{{$invest->date}}</td>
-                                    <td class="center">{{$invest->amount}}</td>
-                                    <td class="center">{{$invest->investment_status}}</td>
+                            <div class="txt"> Current cash balance
+                                @if($current_price)
+                                <span class="date badge badge-info current-balance">{{$current_price->value}}</span>
+                                @endif
+                                </div>
 
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
+
+                            <div class="txt"> Total balance <span class="date badge badge-info total-balance"></span></div>
+
+
                     </div>
                 </div>
 
-
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
-                        <h5>Stock table</h5>
+                        <h5>Stock table</h5><h5 class="total" style="color: #003399">Total stock balance (  )</h5>
                     </div>
                     <div class="widget-content nopadding">
                         <table class="table table-bordered table-striped">
@@ -57,13 +47,13 @@
 
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody  class="parent">
                             @foreach($stocks as $stock)
                                 <tr class="odd gradeX">
                                     <td>{{$stock->ticket}}</td>
-                                    <td class="center">{{$stock->current_price}}</td>
+                                    <td class="key" data-name="{{$stock->ticket}}">{{$stock->current_price}}</td>
                                     <td class="center">{{$stock->average_price}}</td>
-                                    <td class="center"> {{$stock->stock}}</td>
+                                    <td class="stock" data-stock="{{$stock->stock}}"> {{$stock->stock}}</td>
                                     <td>
 
                                         <form action="{{ route('stock.destroy',$stock->id)}}" method="post">
@@ -131,7 +121,41 @@
                         </table>
                     </div>
                     </div>
+
+                <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+                        <h5>Investment table</h5>
+                        @if($current_price)
+                            <h5 class="total-cash" style="color: #003399">Current cash balance (  {{$current_price->value}}  )</h5>
+                        @endif
+                    </div>
+                    <div class="widget-content nopadding">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>investment_status</th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($investment as $invest)
+                                <tr class="odd gradeX">
+                                    <td>{{$invest->date}}</td>
+                                    <td class="center">{{$invest->amount}}</td>
+                                    <td class="center">{{$invest->investment_status}}</td>
+
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
+
+            </div>
             </div>
         </div>
 </div>

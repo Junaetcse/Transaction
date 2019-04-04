@@ -21,4 +21,18 @@ class Transaction extends Model
     public function stock(){
         return $this->belongsTo(Stock::class);
     }
+
+
+    public function insert($stock_id,$transaction,$quantity,$price,$date,$status,$profit){
+        $this::create([
+            'stock_id' => $stock_id,
+            'transaction' => $transaction,
+            'quantity' => $quantity,
+            'price' => $price,
+            'date' => $date,
+            'transaction_status' => $status,
+            'total_porfitloss'=> $profit
+        ]);
+
+    }
 }

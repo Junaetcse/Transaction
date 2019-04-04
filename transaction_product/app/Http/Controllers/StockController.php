@@ -37,8 +37,8 @@ class StockController extends Controller
     public function stockSearch(Request $request){
        // dd($request->keyword);
         $key = $request->keyword;
-        //$url ='https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords='.$key.'&apikey=6N4DLMBGUI1912D9';
-      $url = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=BA&apikey=demo';
+        $url ='https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords='.$key.'&apikey=6N4DLMBGUI1912D9';
+      //$url = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=BA&apikey=demo';
         $client = new Client();
 
         $req = $client->get($url);

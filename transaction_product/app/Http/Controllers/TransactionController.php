@@ -14,6 +14,7 @@ class TransactionController extends Controller
 {
     //
 
+
     public function index(){
         $transactions = Transaction::all();
         return view('transaction.list',compact('transactions'));
@@ -27,6 +28,10 @@ class TransactionController extends Controller
     }
 
     public function store(Request $request){
+
+
+
+
         $transaction = $request->get('transaction');
         $quantity = $request->get('quantity');
         $price = $request->get('price');
@@ -42,55 +47,37 @@ class TransactionController extends Controller
 
 
         if ($transaction == 'buy'){
+            if ($current_price->value < $amount )
+                return Redirect::to('transaction');
+
             $avg_price = $this->avg_px($stock_info->average_price,$stock_info->stock,$quantity,$price);
             $stock_info->average_price = $avg_price;
             $stock_info->stock = $stock_info->stock + $quantity;
+            $current_price->value = $current_price->value - $amount;
+            $current_price->save();
+
+
 
 
         }else{
+            if($stock_info->stock < $quantity){
+
+                return Redirect::to('transaction');
+            }
             $stock_info->stock = $stock_info->stock - $quantity;
             $status = $price - $stock_info->average_price;
             $total_profit = $status * $request->quantity;
+            $current_price->value = $current_price->value + $amount;
+            $current_price->save();
         }
         $stock_info->save();
 
 
-        Transaction::create([
-            'stock_id' => $stock_info->id,
-            'transaction' => $transaction,
-            'quantity' => $quantity,
-            'price' => $price,
-            'date' => $date,
-            'transaction_status' => $status,
-            'total_porfitloss'=> $total_profit
-        ]);
+        (new Transaction())->insert($stock_info->id,$transaction,$quantity,$price,$date,$status,$total_profit);
 
-
-        Investment::create([
-            'date' => $date,
-            'amount' => $amount,
-            'investment_status' => $transaction == 'buy' ? 'investment' : 'withdrawal'
-        ]);
-
-
-
-        if ($current_price){
-            $price = $current_price->value;
-             if ($transaction == 'buy'){
-                 $new_price = $price - $amount;
-             }else{
-                 $new_price = $price + $amount;
-             }
-            $current_price->value = $new_price;
-             $current_price->save();
-        }else{
-            CurrentPrice::create([
-                    'key' => 'current_price',
-                    'value' => '0.0'
-            ]);
-        }
         return Redirect::to('transaction');
     }
+
 
     public function destroy($id){
         $meta_key=Transaction::find($id);

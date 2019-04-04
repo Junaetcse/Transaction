@@ -23,3 +23,6 @@ Route::resource('stock','StockController');
 Route::post('stock-search','StockController@stockSearch');
 Route::resource('transaction','TransactionController');
 Route::post('insert-stock','StockController@insertStock');
+Route::get('investment','InvestmentController@index');
+Route::get('investment/create','InvestmentController@create');
+Route::post('investment/store','InvestmentController@store');
